@@ -4,6 +4,8 @@ from flask import render_template
 from flask import request
 from typing import Optional, Dict, Any, Union
 from flask import jsonify
+import FB_Model as fm
+
 
 from ContentBased import ContentBased
 app = Flask(__name__)
@@ -14,30 +16,32 @@ cb = ContentBased()
 def hello():
     return render_template('index.html')
 
-@app.route("/api/tags", method = ['post', 'get'])
+@app.route("/api/tags", methods = ['post', 'get'])
 def getTags():
-    title = request.form.get("title")
-    body = request.form.get("body")
+    title = request.args.get("title")
+    body = request.args.get("body")
 
-    if title is None:
-        title = request.args['title']
-
-    if body  is None:
-        body = request.args['body']
-
-    if body is None & title is None:
+    if body is None or title is None:
         req = {"title": None, "body": None}
         res = {
         'tags':[],
         'req': req
         }
 
-    return jsonify("sdfjk")
+        return jsonify(res)
 
     tags = cb.getTags(title, body)
 
+    if len(tags) < 20:
+        text = "{} {}".format(title, body)
+        tags =  list(fm.get_ferq_with_txt(text, list(tags)))
+
+
+    req = {"title": title, "body": body}
+
     res = {
     'tags': tags,
+
     'req': req
     }
 

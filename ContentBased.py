@@ -46,7 +46,7 @@ class ContentBased:
 
     # function that takes in movie title as input and returns the top 10 recommended movies
     def getTags(self, title, body):
-        df = pd.read_csv("dataset/sample.csv").head(20)
+        df = pd.read_csv("dataset/sample.csv").head(200)
 
         df = self.map_df_by_tags(df=df)
         df = df[["Title", "Body", "Tags"]]
@@ -100,4 +100,4 @@ class ContentBased:
             for word in list(df["Tags"])[i]:
                 recommended_tags.append(word)
 
-        return recommended_tags
+        return list(set(recommended_tags))

@@ -33,7 +33,7 @@ def get_ferq_with_txt(txt,tags):
         if freq[i] in txt:
             res.append(freq[i])
     if len(set(res)) == 0 :
-        return(set(freq)) 
+        return(set(freq))
     elif len(set(res)) < 15:
         for j in range(len(freq)):
             if len(set(res)) < 15:
@@ -44,14 +44,14 @@ def get_ferq_with_txt(txt,tags):
     else:
         return set(res)
 
-df=pd.read_csv("sample.csv")['Tags']
+df=pd.read_csv("dataset/sample.csv")['Tags']
 df=df.apply(lambda x:x.split(" "))
 data=df.values
 td= TransactionEncoder()
 td_data=td.fit_transform(df)
 df2=pd.DataFrame(td_data,columns=td.columns_)
 
-freq_data = apriori(df2,min_support=0.0009,use_colnames=True)  #0.0004
+freq_data = apriori(df2,min_support=0.009,use_colnames=True)  #0.0004
 freq_data['len']=freq_data.itemsets.apply(lambda x: len(x))
 
 def test():
