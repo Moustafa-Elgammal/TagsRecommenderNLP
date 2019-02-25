@@ -14,7 +14,7 @@ cb = ContentBased()
 def hello():
     return render_template('index.html')
 
-@app.route("/api/tags")
+@app.route("/api/tags", method = ['post', 'get'])
 def getTags():
     title = request.form.get("title")
     body = request.form.get("body")
@@ -25,12 +25,19 @@ def getTags():
     if body  is None:
         body = request.args['body']
 
-    # TODO: get tags from the model
+    if body is None & title is None:
+        req = {"title": None, "body": None}
+        res = {
+        'tags':[],
+        'req': req
+        }
+
+    return jsonify("sdfjk")
+
     tags = cb.getTags(title, body)
-    req = {"title": title, "body": body}
 
     res = {
-    'tags':tags,
+    'tags': tags,
     'req': req
     }
 

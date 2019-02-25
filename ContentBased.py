@@ -17,7 +17,7 @@ stop_words = set(stopwords.words('english'))
 class ContentBased:
 
 
-    def clean(text):
+    def clean(self,text):
         """Remove html tags from a string"""
         clean = re.compile('<.*?>')
         text = re.sub(clean, '', text)
@@ -48,7 +48,7 @@ class ContentBased:
     def getTags(self, title, body):
         df = pd.read_csv("dataset/sample.csv").head(20)
 
-        df = map_df_by_tags(df=df)
+        df = self.map_df_by_tags(df=df)
         df = df[["Title", "Body", "Tags"]]
         df ["Body"] = df["Body"] + df["Title"] + df["Tags"] + df["Tags"]+ df["Tags"]+ df["Tags"]+ df["Tags"]
         df['Title'] =  [str(i) for i in df.index.values] + df["Title"].values
@@ -56,7 +56,7 @@ class ContentBased:
         df.set_index('Title', inplace = True)
 
         # discarding the commas between the actors' full names and getting only the first three names
-        df['Body'] = df['Body'].apply(clean).apply(stemm_stop).apply(tokenzer).apply(lambda x: x.split(' '))
+        df['Body'] = df['Body'].apply(self.clean).apply(self.stemm_stop).apply(self.tokenzer).apply(lambda x: x.split(' '))
         df['Tags'] = df['Tags'].apply(lambda x: x.split(' '))
 
 
