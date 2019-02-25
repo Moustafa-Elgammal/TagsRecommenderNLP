@@ -16,21 +16,29 @@ stop_words = set(stopwords.words('english'))
 
 class ContentBased:
 
-
     def clean(self,text):
         """Remove html tags from a string"""
         clean = re.compile('<.*?>')
-        text = re.sub(clean, '', text)
-        text = re.sub('[^A-Za-z#A-Za-z-A-Za-z.A-Za-zA-Za-z\-A-Za-z]+', ' ', text)
+        text = re.sub(clean, ' ', text)
+        text = re.sub('[^A-Za-z #]+', ' ', text)
+        #remove space one letter space
+        text = re.sub('(\s\w{1}\s)+(\w{1}\s)*',' ', text)
+        #remove space tow letter space
+        text = re.sub('(\s\w{2}\s)+(\w{2}\s)*',' ', text)
+        #remove space # space
+        text = re.sub('(\s\W{1}\s)+(\W{1}\s)*',' ',text)
         return str(text).lower()
 
     def stemm_stop(self, text):
         ps  = PorterStemmer()
-        stop_words = stopwords.words("english")
+        #stop_words = stopwords.words("english")
+        stopwords = nltk.corpus.stopwords.words('english')
+        newStopWords = ['num','na','#']
+        stopwords.extend(newStopWords)
         filtered_words = []
         for i in text.split():
-            if i not in stop_words:
-                filtered_words.append(i)
+            if i not in stopwords:
+                filtered_words.append(ps.stem(i))
         return " ".join(filtered_words)
 
     def tokenzer(self, text):
