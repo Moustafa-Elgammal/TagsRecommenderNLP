@@ -33,7 +33,7 @@ def getTags():
     tags = cb.getTags(title, body)
 
     if len(tags) < 20:
-        text = "{} {}".format(title, body)
+        text = cb.clean("{} {}".format(title, body))
         tags =  list(fm.get_ferq_with_txt(text, list(tags)))
 
 
