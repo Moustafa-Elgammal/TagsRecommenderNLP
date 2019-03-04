@@ -24,9 +24,9 @@ class ContentBased:
         #remove space one letter space
         text = re.sub('(\s\w{1}\s)+(\w{1}\s)*',' ', text)
         #remove space tow letter space
-        text = re.sub('(\s\w{2}\s)+(\w{2}\s)*',' ', text)
+        #text = re.sub('(\s\w{2}\s)+(\w{2}\s)*',' ', text)
         #remove space # space
-        text = re.sub('(\s\W{1}\s)+(\W{1}\s)*',' ',text)
+        #text = re.sub('(\s\W{1}\s)+(\W{1}\s)*',' ',text)
         return str(text).lower()
 
     def stemm_stop(self, text):
