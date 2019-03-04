@@ -1,4 +1,4 @@
-# ChurnByFlask
+# Tags Recommender 
 NTI Big Data Science and Engineering scholarship Graduation Project
 
 ### Contant
